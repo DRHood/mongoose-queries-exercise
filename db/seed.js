@@ -30,60 +30,48 @@ Author.deleteMany({})
 		console.log(err)
 	})
 
-function createData(cb) {
+function createData() {
 	Author.create({
 		firstName: "JK",
 		lastName: "Rowling",
 		birthYear: 1961
-	})
-		.then(author => {
-			Promise.all([
-				Book.create({
-					title: "Harry Potter and the Goblet of Fire",
-					published: 2001,
-					author: author
-				}).then(book => {
-					author.books.push(book)
-					Promise.all([
-						Category.create({
-							name: "Young Adult"
-						}).then(cat => {
-							book.categories.push(cat)
-						}),
-						Category.create({
-							name: "Fiction"
-						}).then(cat => {
-							book.categories.push(cat)
-						})
-					]).then(categories => {
-						author.save(err => console.error(err))
-						book.save()
+	}).then(author => {
+		Promise.all([
+			Category.create({
+				name: "Young Adult"
+			}),
+			Category.create({
+				name: "Fiction"
+			})
+		])
+			.then(cats => {
+				cats.forEach(cat => {
+					cat.save()
+					console.log(cat)
+				});
+				console.log('cats')
+				Promise.all([
+					Book.create({
+						title: "Harry Potter and the Goblet of Fire",
+						published: 2001,
+						author: author
+					}),
+					Book.create({
+						title: "Harry Potter and Sorcerer's Stone",
+						published: 1999,
+						author: author
 					})
-				}),
-				Book.create({
-					title: "Harry Potter and Sorcerer's Stone",
-					published: 1999,
-					author: author
-				}).then(book => {
-					Promise.all([
-						Category.create({
-							name: "Young Adult"
-						}).then(cat => {
-							book.categories.push(cat)
-						}),
-						Category.create({
-							name: "Fiction"
-						}).then(cat => {
-							book.categories.push(cat)
-						})
-					]).then(categories => {
-						author.save(err => console.error(err))
-						book.save()
+				]).then(books => {
+					books.forEach(book => {
+						author.books.push(book)
+						book.categories.push(cats[0])
+						book.save();
 					})
+					author.save()
 				})
-			])
-		})
-		.catch(err => {
-			console.log(err)
-		})
+			})
+			.catch(err => {
+				console.log(err)
+			})
+	})
 }
