@@ -224,7 +224,11 @@ function createData() {
 				]).then(books => {
 					books.forEach(book => {
 						author.books.push(book)
-						book.categories.push(cats[0])
+
+						cats.forEach(cat => {
+							book.categories.push(cat)
+						})
+						
 						book.save()
 					})
 					author.save()
