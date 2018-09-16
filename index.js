@@ -10,7 +10,7 @@ For each query you write, make sure you resolve the promise using .then() and
 console.log() the result inside the .then() function
 
 for example:
-Author.find().then(author => {
+Author.find().then((author) => {
 	console.log(author)
 })
 
@@ -18,7 +18,8 @@ Pay attention to what each query returns. Some will return an array, others retu
 
 */
 
-/* PART 1 QUERIES */
+/* ------ PART 1 QUERIES ------ */
+
 // Get a list of all the authors
 
 
@@ -40,5 +41,22 @@ Pay attention to what each query returns. Some will return an array, others retu
 // How many books did Robert Jordan write? Console log the amount without counting manually
 
 
+/* ------ PART 2 QUERIES ------ */ 
+
+// Get a list of all the books Robert Heinlein has written
 
 
+// Get a list of all the books JK Rowling has written
+
+
+// Log the first book (in the query result, not necessarily by year) that JK Rowling wrote
+
+
+// Log the name of every book Robert Heinlein has written
+
+
+// Log all categories of the first book JK Rowling wrote
+// Why didn't we have to .populate() the categories as well??
+
+
+// Bonus: log the name of the book by robert jordan published in 1998
