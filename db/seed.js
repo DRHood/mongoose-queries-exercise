@@ -171,7 +171,7 @@ function createData() {
 	Author.create({
 		firstName: "JK",
 		lastName: "Rowling",
-		birthYear: 1961
+		birthYear: 1965
 	}).then(author => {
 		Promise.all([
 			Category.create({
